@@ -1,0 +1,240 @@
+[
+  {"fila":1,"columna":1,"valor":"Inicio"}
+,
+  {"fila":1,"columna":2,"valor":"Camino"}
+,
+  {"fila":1,"columna":5,"valor":"Camino"}
+,
+  {"fila":1,"columna":6,"valor":"Estacion"}
+,
+  {"fila":1,"columna":8,"valor":"Estacion"}
+,
+  {"fila":2,"columna":2,"valor":"Camino"}
+,
+  {"fila":2,"columna":3,"valor":"Camino"}
+,
+  {"fila":2,"columna":8,"valor":"Camino"}
+,
+  {"fila":2,"columna":9,"valor":"Camino"}
+,
+  {"fila":2,"columna":10,"valor":"Camino"}
+,
+  {"fila":3,"columna":1,"valor":"Camino"}
+,
+  {"fila":3,"columna":2,"valor":"Camino"}
+,
+  {"fila":3,"columna":4,"valor":"Camino"}
+,
+  {"fila":3,"columna":6,"valor":"Camino"}
+,
+  {"fila":3,"columna":7,"valor":"Camino"}
+,
+  {"fila":3,"columna":8,"valor":"Camino"}
+,
+  {"fila":3,"columna":10,"valor":"Camino"}
+,
+  {"fila":4,"columna":2,"valor":"Camino"}
+,
+  {"fila":4,"columna":3,"valor":"Camino"}
+,
+  {"fila":4,"columna":4,"valor":"Camino"}
+,
+  {"fila":4,"columna":6,"valor":"Camino"}
+,
+  {"fila":4,"columna":8,"valor":"Camino"}
+,
+  {"fila":4,"columna":10,"valor":"Estacion"}
+,
+  {"fila":5,"columna":1,"valor":"Camino"}
+,
+  {"fila":5,"columna":2,"valor":"Camino"}
+,
+  {"fila":5,"columna":4,"valor":"Camino"}
+,
+  {"fila":5,"columna":5,"valor":"Camino"}
+,
+  {"fila":5,"columna":6,"valor":"Camino"}
+,
+  {"fila":5,"columna":7,"valor":"Camino"}
+,
+  {"fila":5,"columna":8,"valor":"Camino"}
+,
+  {"fila":5,"columna":9,"valor":"Camino"}
+,
+  {"fila":5,"columna":10,"valor":"Camino"}
+,
+  {"fila":6,"columna":1,"valor":"Camino"}
+,
+  {"fila":6,"columna":4,"valor":"Camino"}
+,
+  {"fila":6,"columna":6,"valor":"Camino"}
+,
+  {"fila":6,"columna":8,"valor":"Camino"}
+,
+  {"fila":6,"columna":10,"valor":"Camino"}
+,
+  {"fila":7,"columna":1,"valor":"Camino"}
+,
+  {"fila":7,"columna":3,"valor":"Camino"}
+,
+  {"fila":7,"columna":4,"valor":"Camino"}
+,
+  {"fila":7,"columna":5,"valor":"Camino"}
+,
+  {"fila":7,"columna":6,"valor":"Camino"}
+,
+  {"fila":7,"columna":8,"valor":"Camino"}
+,
+  {"fila":7,"columna":9,"valor":"Camino"}
+,
+  {"fila":7,"columna":10,"valor":"Camino"}
+,
+  {"fila":8,"columna":3,"valor":"Camino"}
+,
+  {"fila":8,"columna":6,"valor":"Camino"}
+,
+  {"fila":8,"columna":7,"valor":"Estacion"}
+,
+  {"fila":8,"columna":8,"valor":"Camino"}
+,
+  {"fila":8,"columna":10,"valor":"Camino"}
+,
+  {"fila":9,"columna":1,"valor":"Camino"}
+,
+  {"fila":9,"columna":2,"valor":"Camino"}
+,
+  {"fila":9,"columna":3,"valor":"Camino"}
+,
+  {"fila":9,"columna":4,"valor":"Estacion"}
+,
+  {"fila":9,"columna":6,"valor":"Camino"}
+,
+  {"fila":9,"columna":8,"valor":"Camino"}
+,
+  {"fila":9,"columna":10,"valor":"Camino"}
+,
+  {"fila":10,"columna":2,"valor":"Camino"}
+,
+  {"fila":10,"columna":6,"valor":"Camino"}
+,
+  {"fila":10,"columna":8,"valor":"Camino"}
+,
+  {"fila":10,"columna":9,"valor":"Camino"}
+,
+  {"fila":10,"columna":10,"valor":"Camino"}
+,
+  {"fila":11,"columna":1,"valor":"Camino"}
+,
+  {"fila":11,"columna":2,"valor":"Camino"}
+,
+  {"fila":11,"columna":4,"valor":"Camino"}
+,
+  {"fila":11,"columna":6,"valor":"Camino"}
+,
+  {"fila":11,"columna":8,"valor":"Camino"}
+,
+  {"fila":11,"columna":10,"valor":"Camino"}
+,
+  {"fila":12,"columna":2,"valor":"Camino"}
+,
+  {"fila":12,"columna":3,"valor":"Camino"}
+,
+  {"fila":12,"columna":4,"valor":"Camino"}
+,
+  {"fila":12,"columna":5,"valor":"Camino"}
+,
+  {"fila":12,"columna":6,"valor":"Camino"}
+,
+  {"fila":12,"columna":8,"valor":"Camino"}
+,
+  {"fila":12,"columna":9,"valor":"Camino"}
+,
+  {"fila":12,"columna":10,"valor":"Camino"}
+,
+  {"fila":13,"columna":6,"valor":"Camino"}
+,
+  {"fila":13,"columna":7,"valor":"Estacion"}
+,
+  {"fila":13,"columna":9,"valor":"Camino"}
+,
+  {"fila":14,"columna":1,"valor":"Camino"}
+,
+  {"fila":14,"columna":6,"valor":"Camino"}
+,
+  {"fila":14,"columna":9,"valor":"Camino"}
+,
+  {"fila":15,"columna":1,"valor":"Camino"}
+,
+  {"fila":15,"columna":2,"valor":"Camino"}
+,
+  {"fila":15,"columna":3,"valor":"Camino"}
+,
+  {"fila":15,"columna":4,"valor":"Camino"}
+,
+  {"fila":15,"columna":5,"valor":"Camino"}
+,
+  {"fila":15,"columna":6,"valor":"Camino"}
+,
+  {"fila":15,"columna":7,"valor":"Camino"}
+,
+  {"fila":15,"columna":8,"valor":"Camino"}
+,
+  {"fila":15,"columna":9,"valor":"Camino"}
+,
+  {"fila":15,"columna":10,"valor":"Camino"}
+,
+  {"fila":16,"columna":1,"valor":"Camino"}
+,
+  {"fila":16,"columna":3,"valor":"Camino"}
+,
+  {"fila":16,"columna":7,"valor":"Camino"}
+,
+  {"fila":16,"columna":10,"valor":"Camino"}
+,
+  {"fila":17,"columna":1,"valor":"Camino"}
+,
+  {"fila":17,"columna":3,"valor":"Camino"}
+,
+  {"fila":17,"columna":4,"valor":"Camino"}
+,
+  {"fila":17,"columna":5,"valor":"Camino"}
+,
+  {"fila":17,"columna":6,"valor":"Camino"}
+,
+  {"fila":17,"columna":7,"valor":"Camino"}
+,
+  {"fila":18,"columna":1,"valor":"Camino"}
+,
+  {"fila":18,"columna":5,"valor":"Camino"}
+,
+  {"fila":18,"columna":7,"valor":"Camino"}
+,
+  {"fila":18,"columna":8,"valor":"Camino"}
+,
+  {"fila":18,"columna":9,"valor":"Camino"}
+,
+  {"fila":18,"columna":10,"valor":"Camino"}
+,
+  {"fila":19,"columna":1,"valor":"Camino"}
+,
+  {"fila":19,"columna":2,"valor":"Estacion"}
+,
+  {"fila":19,"columna":5,"valor":"Camino"}
+,
+  {"fila":19,"columna":8,"valor":"Camino"}
+,
+  {"fila":20,"columna":2,"valor":"Camino"}
+,
+  {"fila":20,"columna":3,"valor":"Camino"}
+,
+  {"fila":20,"columna":4,"valor":"Camino"}
+,
+  {"fila":20,"columna":5,"valor":"Camino"}
+,
+  {"fila":20,"columna":8,"valor":"Camino"}
+,
+  {"fila":20,"columna":9,"valor":"Camino"}
+,
+  {"fila":20,"columna":10,"valor":"Estacion"}
+
+]
