@@ -1,5 +1,8 @@
 import json
 from collections import deque
+from Entregas import Entrega, validar_entregas
+from Viajes import crear_viajes
+import random
 
 # Conversión de texto → número
 valores = {
@@ -47,6 +50,33 @@ for i in range(len(matriz)):
 
 print("\nInicio:", inicio)
 print("Estaciones:", estaciones)
+
+
+# CREA ENTREGAS
+cantidad_entregas = 6
+
+entregas = []
+
+for i in range(cantidad_entregas):
+
+    id_entrega = f"Encargo: {i+1}"
+
+    peso = random.randint(1, 20)
+
+    estacion = random.choice(estaciones)
+
+    nueva_entrega = Entrega(id_entrega, peso, estacion)
+
+    entregas.append(nueva_entrega)
+
+# Validar entregas
+entregas = validar_entregas(entregas, estaciones)
+
+print("\nENTREGAS:")
+
+for entrega in entregas:
+    print(entrega)
+
 
 # BFS (ruta más corta)
 def bfs(inicio, objetivo):
@@ -121,3 +151,25 @@ if mejor_ruta:
         print(fila)
 else:
     print("\nNo se encontró ninguna ruta")
+
+
+# CREAR VIAJES
+viajes = crear_viajes(entregas)
+
+print("\nVIAJES:")
+
+for i, viaje in enumerate(viajes, start=1):
+
+    print(f"\nViaje {i}")
+
+    peso_total = 0
+
+    for entrega in viaje:
+
+        print(entrega)
+
+        peso_total += entrega.peso
+
+    print("Peso total:", peso_total)
+
+
