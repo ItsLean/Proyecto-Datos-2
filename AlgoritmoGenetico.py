@@ -86,14 +86,14 @@ def imprimir_mapa(matriz, ruta=None, destinos=None):
 #  pero encapsulado para recibir la matriz
 
 def bfs(matriz, inicio, objetivo):
-    """
-    BFS para encontrar la ruta más corta entre dos celdas.
-    Misma lógica que en Proyecto_2_Datos_2.py, pero recibe
-    la matriz como parámetro en lugar de usar una global.
+    
+    # BFS para encontrar la ruta más corta entre dos celdas.
+    # Misma lógica que en Proyecto_2_Datos_2.py, pero recibe
+    # la matriz como parámetro en lugar de usar una global.
 
-    Retorna: lista de celdas (camino), o None si no existe ruta.
-    La distancia es len(camino) - 1.
-    """
+    # Retorna: lista de celdas (camino), o None si no existe ruta.
+    # La distancia es len(camino) - 1.
+    
     movimientos = [(-1, 0), (1, 0), (0, -1), (0, 1)]
     filas = len(matriz)
     cols  = len(matriz[0])
@@ -131,16 +131,16 @@ def bfs(matriz, inicio, objetivo):
 
 
 def construir_matriz_distancias(matriz, nodos):
-    """
-    Calcula distancias y rutas entre todos los pares de nodos
-    usando BFS. Los nodos son: [inicio] + [estacion_de_cada_entrega].
+    
+    # Calcula distancias y rutas entre todos los pares de nodos
+    # usando BFS. Los nodos son: [inicio] + [estacion_de_cada_entrega].
 
-    Complejidad: O(N² *filas * cols)
+    # Complejidad: O(N² *filas * cols)
 
-    Retorna:
-      dist[i][j]  = distancia (pasos) del nodo i al nodo j
-      rutas[i][j] = lista de celdas del nodo i al nodo j
-    """
+    # Retorna:
+    #   dist[i][j]  = distancia (pasos) del nodo i al nodo j
+    #   rutas[i][j] = lista de celdas del nodo i al nodo j
+    
     n = len(nodos)
     dist  = [[0.0] * n for _ in range(n)]
     rutas = [[[] for _ in range(n)] for _ in range(n)]
@@ -164,20 +164,20 @@ def construir_matriz_distancias(matriz, nodos):
 #  Seccion 3: ALGORITMO GENÉTICO
 
 
-"""
-CÓMO EL AG INTERACTÚA CON crear_viajes():
 
-  Para calcular el fitness:
-    1. Se reordena la lista de entregas según esa permutación.
-    2. Se llama a crear_viajes(),  agrupa respetando peso y límite.
-    3. Se calcula distancia total: para cada viaje, base-est1-...-base.
+# CÓMO EL AG INTERACTÚA CON crear_viajes():
 
-  El AG busca la permutación que minimiza esa distancia total.
+#   Para calcular el fitness:
+#     1. Se reordena la lista de entregas según esa permutación.
+#     2. Se llama a crear_viajes(),  agrupa respetando peso y límite.
+#     3. Se calcula distancia total: para cada viaje, base-est1-...-base.
 
-  Se optimiza el orden antes de agrupar pq diay crear_viajes() es greedy: agrupa en orden de llegada.
-  Si las entregas cercanas entre sí quedan juntas en la lista,
-  crear_viajes() las va a poner en el mismo viaje q seria rutas más cortas.
-"""
+#   El AG busca la permutación que minimiza esa distancia total.
+
+#   Se optimiza el orden antes de agrupar pq diay crear_viajes() es greedy: agrupa en orden de llegada.
+#   Si las entregas cercanas entre sí quedan juntas en la lista,
+#   crear_viajes() las va a poner en el mismo viaje q seria rutas más cortas.
+
 
 
 class AlgoritmoGenetico:
@@ -229,22 +229,22 @@ class AlgoritmoGenetico:
     # ── 3.2 FITNESS ───────────────────────────────────────────────────
 
     def fitness(self, individuo):
-        """
-        Calcula la distancia total de TODOS los viajes para la
-        secuencia de entregas dada por 'individuo'.
+        
+        # Calcula la distancia total de TODOS los viajes para la
+        # secuencia de entregas dada por 'individuo'.
 
-        Pasos:
-          1. Reordenar entregas según el individuo.
-          2. Crear viajes con crear_viajes() (respeta peso y límite).
-          3. Para cada viaje: base - estación1 - estación2 - base.
-          4. Sumar distancias de todos los viajes.
+        # Pasos:
+        #   1. Reordenar entregas según el individuo.
+        #   2. Crear viajes con crear_viajes() (respeta peso y límite).
+        #   3. Para cada viaje: base - estación1 - estación2 - base.
+        #   4. Sumar distancias de todos los viajes.
 
-        Los índices en dist_matrix:
-          0         = base (inicio)
-          1, 2, ... = estaciones en el orden de self.entregas
+        # Los índices en dist_matrix:
+        #   0         = base (inicio)
+        #   1, 2, ... = estaciones en el orden de self.entregas
 
-        Retorna: distancia total (float). MENOR = MEJOR.
-        """
+        # Retorna: distancia total (float). MENOR = MEJOR.
+        
         # Reordenar entregas según el individuo
         entregas_ordenadas = [self.entregas[i] for i in individuo]
 
@@ -293,20 +293,16 @@ class AlgoritmoGenetico:
     # ── 3.4 CRUCE OX (ORDER CROSSOVER) ───────────────────────────────
 
     def cruce_ox(self, padre1, padre2):
-        """
-        Order Crossover (OX): combina dos padres preservando el orden
-        relativo de los genes — ideal para problemas de permutación.
+        
+        # Order Crossover (OX): combina dos padres preservando el orden
+        # relativo de los genes — ideal para problemas de permutación.
 
-        Algoritmo:
-          1. Copiar un segmento aleatorio de padre1 al hijo.
-          2. Completar con los genes de padre2 en orden,
-             saltando los que ya están en el hijo.
+        # Algoritmo:
+        #   1. Copiar un segmento aleatorio de padre1 al hijo.
+        #   2. Completar con los genes de padre2 en orden,
+        #      saltando los que ya están en el hijo.
 
-        Ejemplo:
-          padre1 = [3, 1, 2, 0, 4]  segmento pos[1..3] = [1,2,0]
-          padre2 = [0, 3, 4, 1, 2]
-          hijo   = [3, 1, 2, 0, 4]   genes faltantes del padre2: 3,4
-        """
+        
         n = len(padre1)
         corte1 = random.randint(0, n - 2)
         corte2 = random.randint(corte1 + 1, n - 1)
@@ -334,13 +330,13 @@ class AlgoritmoGenetico:
     # ── 3.5 MUTACIÓN POR SWAP ─────────────────────────────────────────
 
     def mutacion_swap(self, individuo, tasa=None):
-        """
-        Con probabilidad 'tasa' (o self.mutation_rate), intercambia
-        dos genes al azar. Mantiene la permutación válida.
+        
+        # Con probabilidad 'tasa' (o self.mutation_rate), intercambia
+        # dos genes al azar. Mantiene la permutación válida.
 
-        Se muta pq evita convergencia prematura a óptimos locales introduciendo
-        pequeñas variaciones aleatorias en la población.
-        """
+        # Se muta pq evita convergencia prematura a óptimos locales introduciendo
+        # pequeñas variaciones aleatorias en la población.
+        
         tasa = tasa if tasa is not None else self.mutation_rate
         ind = individuo[:]
         if random.random() < tasa:
@@ -351,17 +347,17 @@ class AlgoritmoGenetico:
     # ── 3.6 BUCLE PRINCIPAL ───────────────────────────────────────────
 
     def ejecutar(self, verbose=True):
-        """
-        Corre el AG por self.generations generaciones.
+        
+        # Corre el AG por self.generations generaciones.
 
-        Por cada generación:
-          1. Evaluar población.
-          2. Elitismo: los mejores pasan intactos.
-          3. Reproducción: torneo - cruce OX - mutación swap.
-          4. Anti-estancamiento: aumenta mutación si no mejora en 50 gens.
+        # Por cada generación:
+        #   1. Evaluar población.
+        #   2. Elitismo: los mejores pasan intactos.
+        #   3. Reproducción: torneo - cruce OX - mutación swap.
+        #   4. Anti-estancamiento: aumenta mutación si no mejora en 50 gens.
 
-        Retorna: (mejor_individuo, mejor_distancia)
-        """
+        # Retorna: (mejor_individuo, mejor_distancia)
+        
         if verbose:
             print("\n" + "=" * 60)
             print("  ALGORITMO GENÉTICO — Optimización de Rutas")
@@ -504,18 +500,18 @@ def mostrar_solucion(mejor_orden, entregas, nodos, rutas_matrix, dist_matrix):
 
 
 def mostrar_convergencia(historial_mejor, historial_promedio):
-    """
-    Gráfica ASCII de convergencia del algoritmo genético.
+    
+    # Gráfica ASCII de convergencia del algoritmo genético.
 
-    Lo que muestra:
-      ● = mejor individuo de cada generación
-      ○ = promedio de la población
+    # Lo que muestra:
+    #   ● = mejor individuo de cada generación
+    #   ○ = promedio de la población
 
-    Una buena convergencia:
-      - El mejor (●) cae rápido en las primeras generaciones (exploración).
-      - Luego se estabiliza (explotación del óptimo encontrado).
-      - El promedio (○) converge hacia el mejor con el tiempo.
-    """
+    # Una buena convergencia:
+    #   - El mejor (●) cae rápido en las primeras generaciones (exploración).
+    #   - Luego se estabiliza (explotación del óptimo encontrado).
+    #   - El promedio (○) converge hacia el mejor con el tiempo.
+    
     print("\n" + "=" * 60)
     print("  CONVERGENCIA DEL ALGORITMO GENÉTICO")
     print("=" * 60)
@@ -598,19 +594,19 @@ def guardar_grafica_convergencia(historial_mejor, historial_promedio):
 
 
 def ruta_a_instrucciones(ruta_completa, puntos_entrega):
-    """
-    Convierte la ruta completa en comandos simples para el robot.
-    Inserta DELIVER cuando el robot llega a una estación de entrega.
+    
+    # Convierte la ruta completa en comandos simples para el robot.
+    # Inserta DELIVER cuando el robot llega a una estación de entrega.
 
-    Comandos generados:
-      FORWARD N  = avanzar N celdas
-      LEFT       = girar 90° izquierda
-      RIGHT      = girar 90° derecha
-      DELIVER    = realizar entrega
-      STOP       = fin del recorrido
+    # Comandos generados:
+    #   FORWARD N  = avanzar N celdas
+    #   LEFT       = girar 90° izquierda
+    #   RIGHT      = girar 90° derecha
+    #   DELIVER    = realizar entrega
+    #   STOP       = fin del recorrido
 
-    El robot inicia mirando hacia el SUR (dirección (1,0)).
-    """
+    # El robot inicia mirando hacia el SUR (dirección (1,0)).
+    
     if len(ruta_completa) < 2:
         return ["STOP"]
 
@@ -702,18 +698,17 @@ def ejecutar_algoritmo_genetico(matriz, inicio, estaciones, entregas_validadas,
                                  pop_size=150, generations=400,
                                  mutation_rate=0.05, elite_size=15,
                                  tournament_k=5, verbose=True):
-    """
-    Función principal del módulo. Sellama desde Proyecto_2_Datos_2.py.
+    
+    
+    # Parámetros:
+    #   matriz             : la misma matriz que construye el proyecto
+    #   inicio             : tupla (fila, col) del inicio del robot
+    #   estaciones         : lista de tuplas de estaciones
+    #   entregas_validadas : lista de objetos Entrega ya validados
 
-    Parámetros:
-      matriz             : la misma matriz que construye el proyecto
-      inicio             : tupla (fila, col) del inicio del robot
-      estaciones         : lista de tuplas de estaciones
-      entregas_validadas : lista de objetos Entrega ya validados
-
-    Retorna:
-      (mejor_orden, mejor_distancia, ruta_completa, instrucciones)
-    """
+    # Retorna:
+    #   (mejor_orden, mejor_distancia, ruta_completa, instrucciones)
+    
     if not entregas_validadas:
         print("[ERROR] No hay entregas para optimizar.")
         return None, None, None, None
