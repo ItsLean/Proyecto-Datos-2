@@ -1,31 +1,3 @@
-"""
-=============================================================
-  DIVIDE Y VENCERÁS - Smart Delivery Robot
-  CE-2103 Algoritmos y Estructuras de Datos II
-=============================================================
-
-Divide el mapa en cuadrantes para resolver subproblemas de
-rutas y luego combina los resultados en una solución global.
-
-Integración con el proyecto:
-  - Usa la clase Entrega de Entregas.py
-  - Usa crear_viajes() de Viajes.py
-  - Lee el mismo JSON que Proyecto_2_Datos_2.py
-  - Puede ejecutarse solo o importarse desde el main con:
-      from DivideYVenceras import ejecutar_divide_y_venceras
-
-Idea central del algoritmo:
-  DIVIDIR  → partir el mapa a la mitad (por fila y columna)
-             y asignar cada entrega al cuadrante donde está su
-             estación destino.
-  VENCER   → resolver el orden óptimo DENTRO de cada cuadrante
-             de forma recursiva. Cuando un cuadrante tiene
-             ≤ UMBRAL entregas, se resuelve por fuerza bruta
-             (permutaciones) — es el caso base.
-  COMBINAR → encontrar el mejor ORDEN DE VISITA entre los
-             cuadrantes usando todas las permutaciones posibles
-             (son pocos cuadrantes, por eso es tratable).
-"""
 
 import json
 import random
@@ -41,19 +13,18 @@ from Viajes import crear_viajes, PESO_MAXIMO, MAX_DELIVERIES_PER_TRIP
 UMBRAL_BASE = 2
 
 
-# ─────────────────────────────────────────────
-#  SECCIÓN 1: CARGA DEL MAPA (mismo formato del proyecto)
-# ─────────────────────────────────────────────
+
+# CARGA DEL MAPA 
 
 VALORES = {"Camino": 1, "Inicio": 2, "Estacion": 3}
 
 
 def cargar_mapa(json_path="prueba.json"):
-    """
-    Lee el JSON del proyecto:
-      [{"fila": N, "columna": N, "valor": "Camino/Inicio/Estacion"}, ...]
-    Retorna: (matriz, inicio, estaciones)
-    """
+    
+    # Lee el JSON del proyecto:
+    #   [{"fila": N, "columna": N, "valor": "Camino/Inicio/Estacion"}, ...]
+    # Retorna: (matriz, inicio, estaciones)
+    
     with open(json_path) as f:
         data = json.load(f)
 
@@ -136,9 +107,9 @@ def imprimir_division_cuadrantes(matriz, mid_r, mid_c, grupos, depth=0):
     print(f"{indent}└───────────────────────────────────────────────")
 
 
-# ─────────────────────────────────────────────
-#  SECCIÓN 2: BFS — PATHFINDING
-# ─────────────────────────────────────────────
+
+#   2: BFS — PATHFINDING
+
 
 def bfs(matriz, inicio, objetivo):
     """
@@ -218,28 +189,27 @@ def construir_matrices(matriz, nodos):
     return dist, rutas
 
 
-# ─────────────────────────────────────────────
-#  SECCIÓN 3: DIVIDE Y VENCERÁS
-# ─────────────────────────────────────────────
+
+#   3: DIVIDE Y VENCERÁS
+
 
 class DivideYVenceras:
-    """
-    Resuelve el problema de optimización de rutas dividiendo
-    el mapa en cuadrantes de forma recursiva.
+    
+    # Resuelve el problema de optimización de rutas dividiendo
+    # el mapa en cuadrantes de forma recursiva.
 
-    Terminología:
-      - índice de entrega: posición en self.entregas (0-based)
-      - índice de nodo:    posición en dist_matrix (0=base, 1..n=estaciones)
-      - bbox:              (min_fila, max_fila, min_col, max_col) del cuadrante actual
+    #   - índice de entrega: posición en self.entregas (0-based)
+    #   - índice de nodo:    posición en dist_matrix (0=base, 1..n=estaciones)
+    #   - bbox:              (min_fila, max_fila, min_col, max_col) del cuadrante actual
 
-    Flujo:
-      resolver(indices, bbox)
-        ├─ len <= UMBRAL → brute_force()     ← CASO BASE
-        ├─ todos en mismo sub-bbox → brute_force() (evitar recursión infinita)
-        ├─ dividir en Q1,Q2,Q3,Q4 por punto medio
-        ├─ resolver() recursivo en cada cuadrante no vacío
-        └─ combinar() → mejor orden de visitar los cuadrantes
-    """
+    # orden:
+    #   resolver(indices, bbox)
+    #      len <= UMBRAL → brute_force()     CASO BASE
+    #     todos en mismo sub-bbox → brute_force() (evitar recursión infinita)
+    #     ├dividir en Q1,Q2,Q3,Q4 por punto medio
+    #      resolver() recursivo en cada cuadrante no vacío
+    #     combinar() → mejor orden de visitar los cuadrantes
+    
 
     def __init__(self, dist_matrix, rutas_matrix, entregas):
         """
@@ -310,19 +280,19 @@ class DivideYVenceras:
     # ── DIVIDIR: asignar entregas a cuadrantes ────────────────────────
 
     def dividir(self, indices, bbox):
-        """
-        Divide las entregas de 'indices' en 4 cuadrantes según el
-        punto medio del bounding box actual.
+        
+        # Divide las entregas de 'indices' en 4 cuadrantes según el
+        # punto medio del bounding box actual.
 
-        Cuadrantes (usando (fila, col) de la estación destino):
-          Q1 = fila ≤ mid_r  AND col ≤ mid_c  (sup-izq)
-          Q2 = fila ≤ mid_r  AND col >  mid_c  (sup-der)
-          Q3 = fila >  mid_r AND col ≤ mid_c   (inf-izq)
-          Q4 = fila >  mid_r AND col >  mid_c  (inf-der)
+        # Cuadrantes (usando (fila, col) de la estación destino):
+        #   Q1 = fila ≤ mid_r  AND col ≤ mid_c  (sup-izq)
+        #   Q2 = fila ≤ mid_r  AND col >  mid_c  (sup-der)
+        #   Q3 = fila >  mid_r AND col ≤ mid_c   (inf-izq)
+        #   Q4 = fila >  mid_r AND col >  mid_c  (inf-der)
 
-        Retorna:
-          mid_r, mid_c, [q1_indices, q2_indices, q3_indices, q4_indices]
-        """
+        # Retorna:
+        #   mid_r, mid_c, [q1_indices, q2_indices, q3_indices, q4_indices]
+        
         min_r, max_r, min_c, max_c = bbox
         mid_r = (min_r + max_r) // 2
         mid_c = (min_c + max_c) // 2
@@ -344,19 +314,19 @@ class DivideYVenceras:
     # ── COMBINAR: mejor orden de cuadrantes ──────────────────────────
 
     def combinar(self, sub_soluciones, depth):
-        """
-        Dado que cada cuadrante ya tiene su orden interno resuelto,
-        encuentra el MEJOR ORDEN DE VISITA entre los cuadrantes.
+        
+        # Dado que cada cuadrante ya tiene su orden interno resuelto,
+        # encuentra el MEJOR ORDEN DE VISITA entre los cuadrantes.
 
-        Prueba todas las permutaciones de grupos (≤4! = 24 casos).
-        Para cada permutación, calcula el costo total:
-          base → primer cuadrante → segundo → ... → base
+        # Prueba todas las permutaciones de grupos (≤4! = 24 casos).
+        # Para cada permutación, calcula el costo total:
+        #   base → primer cuadrante → segundo → ... → base
 
-        Este es el paso COMBINAR del algoritmo.
+        # Este es el paso COMBINAR del algoritmo.
 
-        El costo entre dos grupos usa:
-          dist(último del grupo A → primero del grupo B)
-        """
+        # El costo entre dos grupos usa:
+        #   dist(último del grupo A → primero del grupo B)
+        
         indent = "  " * depth
         if len(sub_soluciones) == 1:
             return sub_soluciones[0]
@@ -386,28 +356,28 @@ class DivideYVenceras:
     # ── RESOLVER: función recursiva principal ─────────────────────────
 
     def resolver(self, indices, bbox, depth=0):
-        """
-        Función recursiva de Divide y Vencerás.
+        
+        # Función recursiva de Divide y Vencerás.
 
-        Parámetros:
-          indices : índices de entregas a resolver en este nivel
-          bbox    : (min_r, max_r, min_c, max_c) del cuadrante actual
-          depth   : profundidad de recursión (para el log)
+        # Parámetros:
+        #   indices : índices de entregas a resolver en este nivel
+        #   bbox    : (min_r, max_r, min_c, max_c) del cuadrante actual
+        #   depth   : profundidad de recursión (para el log)
 
-        Retorna: lista de índices de entregas en el orden óptimo
-                 para este cuadrante.
+        # Retorna: lista de índices de entregas en el orden óptimo
+        #          para este cuadrante.
 
-        Árbol de decisión:
-          ┌─ len(indices) == 0  → []               (vacío)
-          ├─ len(indices) <= UMBRAL_BASE → brute_force()  ← CASO BASE
-          ├─ bbox no divisible  → brute_force()    (degeneración)
-          ├─ división no separa → brute_force()    (evitar inf. recursión)
-          └─ caso general:
-               mid = punto medio de bbox
-               Q1..Q4 = dividir por mid
-               sol_i  = resolver(Qi, sub_bbox_i, depth+1)  ← CONQUISTA
-               return combinar([sol_1, sol_2, sol_3, sol_4])  ← COMBINAR
-        """
+        # Árbol de decisión:
+        #   len(indices) == 0  → []               (vacío)
+        #     len(indices) <= UMBRAL_BASE → brute_force()  CASO BASE
+        #   bbox no divisible  → brute_force()    (degeneración)
+        #   división no separa → brute_force()    (evitar inf. recursión)
+        #   caso general:
+        #        mid = punto medio de bbox
+        #        Q1..Q4 = dividir por mid
+        #        sol_i  = resolver(Qi, sub_bbox_i, depth+1)  CONQUISTA
+        #        return combinar([sol_1, sol_2, sol_3, sol_4])  COMBINAR
+        
         indent = "  " * depth
 
         # ── Caso vacío ────────────────────────────────────────────────
@@ -508,9 +478,9 @@ class DivideYVenceras:
         return mejor_orden, mejor_dist
 
 
-# ─────────────────────────────────────────────
-#  SECCIÓN 4: PRESENTACIÓN DE RESULTADOS
-# ─────────────────────────────────────────────
+
+#   4: PRESENTACIÓN DE RESULTADOS
+
 
 def mostrar_solucion(mejor_orden, entregas, nodos, rutas_matrix, dist_matrix):
     """
@@ -564,7 +534,7 @@ def mostrar_solucion(mejor_orden, entregas, nodos, rutas_matrix, dist_matrix):
         ruta_viaje.extend(seg_reg[1:])
         ruta_completa.extend(ruta_viaje)
 
-        print(f"\n    ← Regreso a base : {dist_reg:.0f} pasos")
+        print(f"\n    Regreso a base : {dist_reg:.0f} pasos")
 
     print(f"\n{'═'*60}")
     print(f"  DISTANCIA TOTAL (todos los viajes): {distancia_total:.0f} pasos")
@@ -596,9 +566,9 @@ def imprimir_mapa_simple(matriz, ruta=None, destinos=None):
     print(f"  {'─'*ancho}")
 
 
-# ─────────────────────────────────────────────
-#  SECCIÓN 5: INSTRUCCIONES PARA EL ROBOT
-# ─────────────────────────────────────────────
+
+#   5: INSTRUCCIONES PARA EL ROBOT
+
 
 def ruta_a_instrucciones(ruta, puntos_entrega):
     """
@@ -658,26 +628,21 @@ def mostrar_instrucciones(instrucciones):
     print(f"\n  Total: {len(instrucciones)} instrucciones")
 
 
-# ─────────────────────────────────────────────
-#  SECCIÓN 6: FUNCIÓN PÚBLICA DE INTEGRACIÓN
-# ─────────────────────────────────────────────
+
+#   6: FUNCIÓN PÚBLICA DE INTEGRACIÓN
+
 
 def ejecutar_divide_y_venceras(matriz, inicio, estaciones,
                                 entregas_validadas, verbose=True):
-    """
-    Función principal. Llámala desde Proyecto_2_Datos_2.py así:
+   
+    # Parámetros:
+    #   matriz             : misma matriz que construye el proyecto
+    #   inicio             : tupla (fila, col) del inicio del robot
+    #   estaciones         : lista de tuplas de estaciones del mapa
+    #   entregas_validadas : lista de objetos Entrega ya validados
 
-        from DivideYVenceras import ejecutar_divide_y_venceras
-        ejecutar_divide_y_venceras(matriz, inicio, estaciones, entregas)
-
-    Parámetros:
-      matriz             : misma matriz que construye el proyecto
-      inicio             : tupla (fila, col) del inicio del robot
-      estaciones         : lista de tuplas de estaciones del mapa
-      entregas_validadas : lista de objetos Entrega ya validados
-
-    Retorna: (mejor_orden, distancia_total, ruta_completa, instrucciones)
-    """
+    # Retorna: (mejor_orden, distancia_total, ruta_completa, instrucciones)
+    
     if not entregas_validadas:
         print("[ERROR] No hay entregas.")
         return None, None, None, None
@@ -737,9 +702,9 @@ def ejecutar_divide_y_venceras(matriz, inicio, estaciones,
     return mejor_orden, dist_total, ruta_completa, instrucciones
 
 
-# ─────────────────────────────────────────────
-#  SECCIÓN 7: STANDALONE (ejecutar solo)
-# ─────────────────────────────────────────────
+
+#   7: STANDALONE (ejecutar solo)
+
 
 if __name__ == "__main__":
     print("\n" + "█"*60)
