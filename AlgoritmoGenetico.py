@@ -1,20 +1,4 @@
-"""
 
-Optimiza el ORDEN de entregas para minimizar la distancia total
-recorrida en todos los viajes combinados.
-
-  - Usa la clase Entrega de Entregas.py
-  - Usa crear_viajes() de Viajes.py para respetar el límite de
-    peso y entregas por viaje
-  - Lee el mismo JSON que usa Proyecto_2_Datos_2.py
-  - Puede ejecutarse solo (standalone) o importarse desde el main
-
-
-  El AG encuentra la PERMUTACIÓN óptima de las entregas.
-  Luego crear_viajes() las agrupa respetando PESO_MAXIMO y
-  MAX_DELIVERIES_PER_TRIP. La fitness calcula la distancia
-  total de TODOS los viajes (base-ests-base por cada viaje).
-"""
 
 import json
 import random
