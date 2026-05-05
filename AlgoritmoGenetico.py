@@ -13,7 +13,7 @@ recorrida en todos los viajes combinados.
   El AG encuentra la PERMUTACIÓN óptima de las entregas.
   Luego crear_viajes() las agrupa respetando PESO_MAXIMO y
   MAX_DELIVERIES_PER_TRIP. La fitness calcula la distancia
-  total de TODOS los viajes (base→ests→base por cada viaje).
+  total de TODOS los viajes (base-ests-base por cada viaje).
 """
 
 import json
@@ -27,7 +27,7 @@ from Viajes import crear_viajes, PESO_MAXIMO, MAX_DELIVERIES_PER_TRIP
 
 #Carga del mapilla
 
-# Conversión de texto → número 
+# Conversión de texto - número 
 VALORES = {
     "Camino":   1,
     "Inicio":   2,
@@ -97,10 +97,9 @@ def imprimir_mapa(matriz, ruta=None, destinos=None):
     print("  " + "─" * ancho)
 
 
-# ─────────────────────────────────────────────
-#  SECCIÓN 2: BFS — igual que en Proyecto_2_Datos_2.py
-#              pero encapsulado para recibir la matriz
-# ─────────────────────────────────────────────
+
+#  BFS — igual que en Proyecto_2_Datos_2.py
+#  pero encapsulado para recibir la matriz
 
 def bfs(matriz, inicio, objetivo):
     """
@@ -152,7 +151,7 @@ def construir_matriz_distancias(matriz, nodos):
     Calcula distancias y rutas entre todos los pares de nodos
     usando BFS. Los nodos son: [inicio] + [estacion_de_cada_entrega].
 
-    Complejidad: O(N² × filas × cols)
+    Complejidad: O(N² *filas * cols)
 
     Retorna:
       dist[i][j]  = distancia (pasos) del nodo i al nodo j
@@ -177,27 +176,23 @@ def construir_matriz_distancias(matriz, nodos):
     return dist, rutas
 
 
-# ─────────────────────────────────────────────
-#  SECCIÓN 3: ALGORITMO GENÉTICO
-# ─────────────────────────────────────────────
+
+#  Seccion 3: ALGORITMO GENÉTICO
+
 
 """
 CÓMO EL AG INTERACTÚA CON crear_viajes():
 
-  Un individuo es una PERMUTACIÓN de todas las entregas.
-  Ejemplo con 5 entregas: [3, 0, 4, 1, 2]
-
   Para calcular el fitness:
     1. Se reordena la lista de entregas según esa permutación.
-    2. Se llama a crear_viajes() → agrupa respetando peso y límite.
-    3. Se calcula distancia total: para cada viaje, base→est1→...→base.
+    2. Se llama a crear_viajes(),  agrupa respetando peso y límite.
+    3. Se calcula distancia total: para cada viaje, base-est1-...-base.
 
   El AG busca la permutación que minimiza esa distancia total.
 
-  ¿Por qué optimizar el orden ANTES de agrupar?
-  Porque crear_viajes() es greedy: agrupa en orden de llegada.
+  Se optimiza el orden antes de agrupar pq diay crear_viajes() es greedy: agrupa en orden de llegada.
   Si las entregas cercanas entre sí quedan juntas en la lista,
-  crear_viajes() las pondrá en el mismo viaje → rutas más cortas.
+  crear_viajes() las va a poner en el mismo viaje q seria rutas más cortas.
 """
 
 
@@ -257,7 +252,7 @@ class AlgoritmoGenetico:
         Pasos:
           1. Reordenar entregas según el individuo.
           2. Crear viajes con crear_viajes() (respeta peso y límite).
-          3. Para cada viaje: base → estación1 → estación2 → base.
+          3. Para cada viaje: base - estación1 - estación2 - base.
           4. Sumar distancias de todos los viajes.
 
         Los índices en dist_matrix:
@@ -379,7 +374,7 @@ class AlgoritmoGenetico:
         Por cada generación:
           1. Evaluar población.
           2. Elitismo: los mejores pasan intactos.
-          3. Reproducción: torneo → cruce OX → mutación swap.
+          3. Reproducción: torneo - cruce OX - mutación swap.
           4. Anti-estancamiento: aumenta mutación si no mejora en 50 gens.
 
         Retorna: (mejor_individuo, mejor_distancia)
@@ -451,9 +446,9 @@ class AlgoritmoGenetico:
         return self.mejor_individuo, self.mejor_distancia
 
 
-# ─────────────────────────────────────────────
-#  SECCIÓN 4: PRESENTACIÓN DE RESULTADOS
-# ─────────────────────────────────────────────
+
+#  Seccion 4: PRESENTACIÓN DE RESULTADOS
+
 
 def mostrar_solucion(mejor_orden, entregas, nodos, rutas_matrix, dist_matrix):
     """
@@ -501,11 +496,11 @@ def mostrar_solucion(mejor_orden, entregas, nodos, rutas_matrix, dist_matrix):
             else:
                 ruta_viaje.extend(segmento)
 
-            print(f"\n    → Entrega : {entrega.id}")
+            print(f"\n    - Entrega : {entrega.id}")
             print(f"      Destino  : {entrega.estacion}")
             print(f"      Peso     : {entrega.peso} kg")
             print(f"      Distancia: {dist:.0f} pasos")
-            print(f"      Ruta     : {' → '.join(str(p) for p in segmento)}")
+            print(f"      Ruta     : {' - '.join(str(p) for p in segmento)}")
 
             nodo_actual = nodo_destino
 
@@ -590,8 +585,8 @@ def mostrar_convergencia(historial_mejor, historial_promedio):
     if historial_mejor[0] > 0:
         mejora = (1 - historial_mejor[-1] / historial_mejor[0]) * 100
         print(f"\n  Interpretación:")
-        print(f"    • Generación 1  → distancia inicial: {historial_mejor[0]:.1f}")
-        print(f"    • Generación {n} → distancia final:   {historial_mejor[-1]:.1f}")
+        print(f"    • Generación 1  - distancia inicial: {historial_mejor[0]:.1f}")
+        print(f"    • Generación {n} - distancia final:   {historial_mejor[-1]:.1f}")
         print(f"    • Mejora lograda: {mejora:.1f}%")
         print(f"    • La caída al inicio = exploración del espacio de búsqueda.")
         print(f"    • La estabilización  = convergencia hacia el óptimo local.")
@@ -615,9 +610,9 @@ def guardar_grafica_convergencia(historial_mejor, historial_promedio):
     plt.savefig("convergencia_ag.png", dpi=150)
     plt.show()
     print("[OK] Gráfica guardada en convergencia_ag.png")
-# ─────────────────────────────────────────────
-#  SECCIÓN 5: INSTRUCCIONES PARA EL ROBOT
-# ─────────────────────────────────────────────
+
+#  Seccion 5: INSTRUCCIONES PARA EL ROBOT
+
 
 def ruta_a_instrucciones(ruta_completa, puntos_entrega):
     """
@@ -696,9 +691,9 @@ def mostrar_instrucciones(instrucciones):
     print(f"\n  Total: {len(instrucciones)} instrucciones")
 
 
-# ─────────────────────────────────────────────
-#  SECCIÓN 6: MAIN
-# ─────────────────────────────────────────────
+
+#  Seccion 6: MAIN
+
 
 def _estaciones_alcanzables(matriz, inicio):
     """
@@ -816,7 +811,7 @@ def ejecutar_algoritmo_genetico(matriz, inicio, estaciones, entregas_validadas,
     return mejor_orden, mejor_distancia, ruta_completa, instrucciones
 
 
-# ── Modo standalone (ejecutar solo este archivo) ──────────────────────
+
 
 if __name__ == "__main__":
     print("\n" + "█" * 60)
