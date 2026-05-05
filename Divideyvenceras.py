@@ -730,7 +730,7 @@ def ejecutar_divide_y_venceras(matriz, inicio, estaciones,
         "instrucciones"  : instrucciones,
         "traza"          : dyv.log
     }
-    with open("resultado_dyv.json", "w") as f:
+    with open("resultado_dyv.json", "w", encoding="utf-8") as f:
         json.dump(resultado, f, indent=2, ensure_ascii=False)
     print("\n[OK] Resultados guardados en resultado_dyv.json")
 
