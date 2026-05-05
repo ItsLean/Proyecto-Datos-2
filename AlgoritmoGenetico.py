@@ -1,20 +1,15 @@
 """
-=============================================================
-  ALGORITMO GENÉTICO - Smart Delivery Robot
-  CE-2103 Algoritmos y Estructuras de Datos II
-=============================================================
 
 Optimiza el ORDEN de entregas para minimizar la distancia total
 recorrida en todos los viajes combinados.
 
-Integración con el proyecto:
   - Usa la clase Entrega de Entregas.py
   - Usa crear_viajes() de Viajes.py para respetar el límite de
     peso y entregas por viaje
   - Lee el mismo JSON que usa Proyecto_2_Datos_2.py
   - Puede ejecutarse solo (standalone) o importarse desde el main
 
-Idea central del AG aplicado a viajes:
+
   El AG encuentra la PERMUTACIÓN óptima de las entregas.
   Luego crear_viajes() las agrupa respetando PESO_MAXIMO y
   MAX_DELIVERIES_PER_TRIP. La fitness calcula la distancia
@@ -30,11 +25,9 @@ from Entregas import Entrega, validar_entregas
 from Viajes import crear_viajes, PESO_MAXIMO, MAX_DELIVERIES_PER_TRIP
 
 
-# ─────────────────────────────────────────────
-#  SECCIÓN 1: CARGA DEL MAPA (mismo formato que el proyecto)
-# ─────────────────────────────────────────────
+#Carga del mapilla
 
-# Conversión de texto → número (igual que en Proyecto_2_Datos_2.py)
+# Conversión de texto → número 
 VALORES = {
     "Camino":   1,
     "Inicio":   2,
@@ -43,13 +36,11 @@ VALORES = {
 
 
 def cargar_mapa(json_path="prueba.json"):
-    """
-    Lee el JSON con el formato del proyecto:
-      [{"fila": N, "columna": N, "valor": "Camino/Inicio/Estacion"}, ...]
-
-    Construye la matriz igual que en Proyecto_2_Datos_2.py.
-    Retorna: (matriz, inicio, estaciones)
-    """
+    
+   # Lee el JSON con el formato del proyecto
+   # Se construye la matriz
+   # Retorna: (matriz, inicio, estaciones)
+    
     with open(json_path) as f:
         data = json.load(f)
 
