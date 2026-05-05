@@ -173,3 +173,5 @@ for i, viaje in enumerate(viajes, start=1):
     print("Peso total:", peso_total)
 
 
+from AlgoritmoGenetico import ejecutar_algoritmo_genetico
+ejecutar_algoritmo_genetico(matriz, inicio, estaciones, entregas)
