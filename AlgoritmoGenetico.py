@@ -605,7 +605,25 @@ def mostrar_convergencia(historial_mejor, historial_promedio):
         print(f"    • La caída al inicio = exploración del espacio de búsqueda.")
         print(f"    • La estabilización  = convergencia hacia el óptimo local.")
 
+ #Para ver grafica de convergencia del algoritmo genetico 
+import matplotlib.pyplot as plt
 
+def guardar_grafica_convergencia(historial_mejor, historial_promedio):
+    generaciones = list(range(1, len(historial_mejor) + 1))
+    
+    plt.figure(figsize=(10, 5))
+    plt.plot(generaciones, historial_mejor,   label="Mejor individuo",      color="blue")
+    plt.plot(generaciones, historial_promedio, label="Promedio población",   color="orange", linestyle="--")
+    
+    plt.title("Convergencia del Algoritmo Genético")
+    plt.xlabel("Generación")
+    plt.ylabel("Distancia total (pasos)")
+    plt.legend()
+    plt.grid(True)
+    plt.tight_layout()
+    plt.savefig("convergencia_ag.png", dpi=150)
+    plt.show()
+    print("[OK] Gráfica guardada en convergencia_ag.png")
 # ─────────────────────────────────────────────
 #  SECCIÓN 5: INSTRUCCIONES PARA EL ROBOT
 # ─────────────────────────────────────────────
@@ -846,22 +864,4 @@ if __name__ == "__main__":
         estaciones=estaciones,
         entregas_validadas=entregas_validas
     )
-    #Para ver grafica de convergencia del algoritmo genetico 
-import matplotlib.pyplot as plt
-
-def guardar_grafica_convergencia(historial_mejor, historial_promedio):
-    generaciones = list(range(1, len(historial_mejor) + 1))
-    
-    plt.figure(figsize=(10, 5))
-    plt.plot(generaciones, historial_mejor,   label="Mejor individuo",      color="blue")
-    plt.plot(generaciones, historial_promedio, label="Promedio población",   color="orange", linestyle="--")
-    
-    plt.title("Convergencia del Algoritmo Genético")
-    plt.xlabel("Generación")
-    plt.ylabel("Distancia total (pasos)")
-    plt.legend()
-    plt.grid(True)
-    plt.tight_layout()
-    plt.savefig("convergencia_ag.png", dpi=150)
-    plt.show()
-    print("[OK] Gráfica guardada en convergencia_ag.png")
+   
