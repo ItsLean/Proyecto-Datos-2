@@ -321,7 +321,7 @@ class AlgoritmoGenetico:
         Ejemplo:
           padre1 = [3, 1, 2, 0, 4]  segmento pos[1..3] = [1,2,0]
           padre2 = [0, 3, 4, 1, 2]
-          hijo   = [3, 1, 2, 0, 4]  ← genes faltantes del padre2: 3,4
+          hijo   = [3, 1, 2, 0, 4]   genes faltantes del padre2: 3,4
         """
         n = len(padre1)
         corte1 = random.randint(0, n - 2)
@@ -354,8 +354,7 @@ class AlgoritmoGenetico:
         Con probabilidad 'tasa' (o self.mutation_rate), intercambia
         dos genes al azar. Mantiene la permutación válida.
 
-        ¿Por qué mutar?
-        Evita convergencia prematura a óptimos locales introduciendo
+        Se muta pq evita convergencia prematura a óptimos locales introduciendo
         pequeñas variaciones aleatorias en la población.
         """
         tasa = tasa if tasa is not None else self.mutation_rate
@@ -510,7 +509,7 @@ def mostrar_solucion(mejor_orden, entregas, nodos, rutas_matrix, dist_matrix):
         distancia_total += dist_regreso
         ruta_viaje.extend(segmento_regreso[1:])
 
-        print(f"\n    ← Regreso a base: {dist_regreso:.0f} pasos")
+        print(f"\n    Regreso a base: {dist_regreso:.0f} pasos")
         ruta_completa.extend(ruta_viaje)
 
     print(f"\n{'═'*60}")
@@ -591,7 +590,7 @@ def mostrar_convergencia(historial_mejor, historial_promedio):
         print(f"    • La caída al inicio = exploración del espacio de búsqueda.")
         print(f"    • La estabilización  = convergencia hacia el óptimo local.")
 
- #Para ver grafica de convergencia del algoritmo genetico 
+#Para ver grafica de convergencia del algoritmo genetico 
 import matplotlib.pyplot as plt
 
 def guardar_grafica_convergencia(historial_mejor, historial_promedio):
@@ -720,7 +719,7 @@ def ejecutar_algoritmo_genetico(matriz, inicio, estaciones, entregas_validadas,
                                  mutation_rate=0.05, elite_size=15,
                                  tournament_k=5, verbose=True):
     """
-    Función principal del módulo. Puede llamarse desde Proyecto_2_Datos_2.py.
+    Función principal del módulo. Sellama desde Proyecto_2_Datos_2.py.
 
     Parámetros:
       matriz             : la misma matriz que construye el proyecto
@@ -788,7 +787,7 @@ def ejecutar_algoritmo_genetico(matriz, inicio, estaciones, entregas_validadas,
 
     # Gráfica de convergencia
     mostrar_convergencia(ag.historial_mejor, ag.historial_promedio)
-    guardar_grafica_convergencia(ag.historial_mejor, ag.historial_promedio)  # ← esta línea
+    guardar_grafica_convergencia(ag.historial_mejor, ag.historial_promedio)  
     # Instrucciones para el robot
     instrucciones = ruta_a_instrucciones(ruta_completa, destinos)
     mostrar_instrucciones(instrucciones)
@@ -829,7 +828,7 @@ if __name__ == "__main__":
     print(f"Estaciones ({len(estaciones)}): {estaciones}")
     imprimir_mapa(matriz)
 
-    # Crear entregas de ejemplo usando la clase Entrega del proyecto
+    
     print("\n[ENTREGAS] Generando entregas de ejemplo...")
     entregas_raw = []
     for i, est in enumerate(estaciones[:6]):  # máximo 6 entregas
