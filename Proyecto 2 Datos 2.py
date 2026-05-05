@@ -175,3 +175,5 @@ for i, viaje in enumerate(viajes, start=1):
 
 from AlgoritmoGenetico import ejecutar_algoritmo_genetico
 ejecutar_algoritmo_genetico(matriz, inicio, estaciones, entregas)
+from DivideYVenceras import ejecutar_divide_y_venceras
+ejecutar_divide_y_venceras(matriz, inicio, estaciones, entregas)
