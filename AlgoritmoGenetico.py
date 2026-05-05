@@ -802,7 +802,7 @@ def ejecutar_algoritmo_genetico(matriz, inicio, estaciones, entregas_validadas,
 
     # Gráfica de convergencia
     mostrar_convergencia(ag.historial_mejor, ag.historial_promedio)
-
+    guardar_grafica_convergencia(ag.historial_mejor, ag.historial_promedio)  # ← esta línea
     # Instrucciones para el robot
     instrucciones = ruta_a_instrucciones(ruta_completa, destinos)
     mostrar_instrucciones(instrucciones)
